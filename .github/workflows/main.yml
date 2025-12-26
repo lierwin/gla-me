@@ -1,38 +1,28 @@
-name: Deploy to Meteor Galaxy
+name: Daily Update
 
 on:
+  schedule:
+    - cron: '5 1 * * *'
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
 
 jobs:
-  deploy:
+  update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Update README with timestamp
+        run: |
+          UTC_TIME=$(date -u +'%Y-%m-%d %H:%M:%S')
+          BJ_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')
+
+          echo -e "\n## 🕒 最后更新时间\n\n**UTC**: \`$UTC_TIME\`\n**北京时间**: \`$BJ_TIME\`\n" >> README.md
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          node-version: '14' # Meteor 兼容性较好
-
-      - name: Install Meteor
-        run: |
-          npm install -g meteor
-          # 或者使用官方脚本: curl https://install.meteor.com/ | sh
-
-      - name: Install Dependencies
-        run: meteor npm install
-
-      - name: Deploy to Galaxy
-        env:
-          METEOR_SESSION_TOKEN: ${{ secrets.METEOR_SESSION_TOKEN }}
-          # 如果你的 package.json 没有指定 settings.json，可以在这里通过 --settings 传递
-          # 这里假设你的环境变量都写在代码里的 defaults 或者通过 Galaxy 后台配置
-        run: |
-          meteor deploy galaxy-beta.meteor.com --free --mongo --owner ${{ secrets.METEOR_OWNER }} 
-          # 注意：
-          # 1. galaxy-beta.meteor.com 是部署地址，--free 表示使用免费计划
-          # 2. 如果你有特定域名，替换 galaxy-beta... 为你的域名
-          # 3. --owner 是可选的，如果部署到组织账号下需要
+          commit_message: "Auto deploy by Github Actions"
