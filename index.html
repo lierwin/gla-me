@@ -1,11 +1,54 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <title>GalaxyCloud</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy 节点服务</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 { margin-bottom: 20px; font-size: 24px; }
+        p { margin-bottom: 30px; opacity: 0.9; line-height: 1.6; }
+        .btn {
+            display: inline-block;
+            background-color: #fff;
+            color: #764ba2;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
-  <h2>Service is running</h2>
-  <p>Visit <code>/sub</code> to get subscription</p>
+    <div class="container">
+        <h1>🚀 服务运行中</h1>
+        <p>Meteor Galaxy 节点服务已部署完毕。<br>系统正在后台生成和维护隧道连接。</p>
+        <a href="/sub" class="btn">获取订阅节点</a>
+    </div>
 </body>
 </html>
